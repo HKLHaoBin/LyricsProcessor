@@ -1,8 +1,7 @@
-import os
 import re
 from github import Github
+import os
 
-# 定义文本拆分与处理函数
 def transform_text(input_text):
     lines = input_text.split("\n")
     result_lines = []
@@ -19,7 +18,6 @@ def transform_text(input_text):
     
     return result_lines
 
-# 定义歌词时间戳处理函数
 def process_lyrics(input_lines):
     result_lines = []
 
@@ -43,25 +41,26 @@ def process_lyrics(input_lines):
     
     return result_lines
 
-# 获取环境变量
-github_token = os.getenv("GITHUB_TOKEN")
-issue_number = os.getenv("ISSUE_NUMBER")
-repository_name = os.getenv("GITHUB_REPOSITORY")
+def main():
+    # 从环境变量中获取 Issue 内容
+    token = os.getenv("GITHUB_TOKEN")
+    repo_name = os.getenv("GITHUB_REPOSITORY")
+    issue_number = int(os.getenv("ISSUE_NUMBER"))
 
-# 初始化 GitHub 客户端
-g = Github(github_token)
-repo = g.get_repo(repository_name)
-issue = repo.get_issue(int(issue_number))
+    g = Github(token)
+    repo = g.get_repo(repo_name)
+    issue = repo.get_issue(number=issue_number)
 
-# 从 Issue 中获取内容
-input_text = issue.body
+    # 获取 Issue 内容
+    input_text = issue.body
 
-# 处理歌词
-split_lines = transform_text(input_text)
-processed_lines = process_lyrics(split_lines)
+    # 处理歌词
+    split_lines = transform_text(input_text)
+    processed_lines = process_lyrics(split_lines)
 
-# 生成评论内容
-output_text = "\n".join(processed_lines)
+    # 生成评论内容
+    result = "\n".join(processed_lines)
+    issue.create_comment(f"处理后的歌词内容：\n```\n{result}\n```")
 
-# 发布评论
-issue.create_comment(f"处理结果：\n```\n{output_text}\n```")
+if __name__ == "__main__":
+    main()
