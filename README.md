@@ -1,4 +1,4 @@
-# LyricsProcessor
+# LyricsProcessor - 处理QRC歌词的背景人声歌词与其他歌词在同一行的情况
 
 A GitHub Actions workflow that processes lyrics with timestamps provided in GitHub Issues and posts the processed results as comments.
 
