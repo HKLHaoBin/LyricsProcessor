@@ -1,4 +1,4 @@
-name: Process Lyricify Syllable Lyrics
+name: Process Lyrics on Issues
 
 on:
   issues:
@@ -28,7 +28,7 @@ jobs:
       - name: Process Lyrics
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE_NUMBER: ${{ github.event.issue.number }}  # 传递 Issue 编号
-          GITHUB_REPOSITORY: ${{ github.repository }}     # 传递仓库名称
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           python3 process_lyrics.py
