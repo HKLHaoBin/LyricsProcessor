@@ -6,6 +6,8 @@ from github import Github
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 REPO_NAME = os.getenv("GITHUB_REPOSITORY")
 ISSUE_NUMBER = os.getenv("ISSUE_NUMBER")
+if not ISSUE_NUMBER:
+    raise ValueError("ISSUE_NUMBER environment variable is not set. Ensure the workflow passes the issue number.")
 
 # 初始化 GitHub 客户端
 g = Github(GITHUB_TOKEN)
