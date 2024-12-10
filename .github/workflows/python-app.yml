@@ -1,38 +1,26 @@
-name: Process Lyrics from Issues
+name: Process Lyricify Syllable Lyrics
 
 on:
-  issue_comment:
-    types: [created]
+  issues:
+    types: [opened, edited]
 
-env:
-  PYTHONUNBUFFERED: 1
+permissions:
+  issues: write
 
 jobs:
-  process-lyrics:
+  process_lyrics:
     runs-on: ubuntu-latest
-
     steps:
-    # Step 1: Checkout the repository
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-    # Step 2: Set up Python
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # Step 3: Install dependencies
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install PyGithub  # 安装 PyGithub，用于 GitHub API 操作
-
-    # Step 4: Run the Python script
-    - name: Run process_lyrics.py
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub 提供的默认 Token
-        ISSUE_NUMBER: ${{ github.event.issue.number }}
-        GITHUB_REPOSITORY: ${{ github.repository }}
-      run: |
-        python process_lyrics.py
+      - name: Process Lyrics
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 process_lyrics.py
