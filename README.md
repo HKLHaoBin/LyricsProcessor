@@ -4,6 +4,8 @@ A GitHub Actions workflow that processes lyrics with timestamps provided in GitH
 
 一个 GitHub Actions 工作流，用于处理 GitHub Issue 中提供的带时间戳的歌词，并将处理结果以评论的形式发布。
 
+# [点击这里使用本工具](https://github.com/HKLHaoBin/LyricsProcessor/issues/new/choose)
+
 ---
 
 ## Features | 功能
